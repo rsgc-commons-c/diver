@@ -12,11 +12,8 @@ void setup() {
 void draw() {
   //background
   background(184, 70, 100);
-  //diver
 
-  ellipse(200, 50, 30, 30);
-  fill(0, 0, 0);
-
+  ellipse(mouseX, mouseY, 10, 10);
 
   //coordinates
   textSize(10);
@@ -24,21 +21,4 @@ void draw() {
   text("X is: " + mouseX, mouseX, mouseY);
   text("Y is: " + mouseY, mouseX, mouseY +10);
   noStroke();
-}
-
-
-void mouseMoved() {
-  int move;
-  int movee;
-  move = mouseX;
-  movee = mouseY;
-  ellipse(move, movee, 10, 10);
-
-  move = move + 5;
-  if (move > 255) {
-    move = 0;
-    movee = movee + 5;
-    if (movee > 255) 
-      movee = 0;
-  }
 }
