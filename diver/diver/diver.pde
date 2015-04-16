@@ -4,9 +4,10 @@
 //shark
 
 int u=0;//u can be equal to anything for us
-float[] x = new float[10];//now we have 10 programmable values for x
-float[] y = new float[10];//now we have 10 programmable values for y
-int[] xflip = new int[10];// now we have the possibility to flip the sharks to go back across the screen 
+float[] x = new float[40];//now we have 10 programmable values for x
+float[] y = new float[40];//now we have 10 programmable values for y
+int[] xflip = new int[40];// now we have the possibility to flip the sharks to go back across the screen
+int[] yflip = new int[40];//this lets the sharks come back on a different path
 /*this is a 
  u = 0
  x[1] = 0
@@ -22,6 +23,7 @@ void setup() {
     x[u] = random(width);
     y[u] = random(height);
     xflip[u] = 1;
+    yflip[u] = 1;
     u = u+1;
   }
 }
@@ -37,16 +39,23 @@ void draw() {
     x[u] = x[u]+1 * xflip[u];
     if (x[u] > width) {
       xflip[u] = -1;
+      y[u] = y[u] + random(-100, 100);
     }
-    if (x[u]<0){
+    if (x[u]<0) {
       xflip[u]= 1;
+      y[u] = y[u] + random(-100, 100);
     }
-  }
+    if (y[u] > 700||y[u] < 0) {
+      y[u] = random(0, height);
+      x[u] = random(0, width);
+      ellipse (x[u], y[u], 50, 50);//just shows where it is 
+    } 
 
-  //coordinates
-  textSize(10);
-  fill(0, 0, 0);
-  text("X is: " + mouseX, mouseX, mouseY);
-  text("Y is: " + mouseY, mouseX, mouseY +10);
-  noStroke();
+    //coordinates
+    textSize(10);
+    fill(0, 0, 0);
+    text("X is: " + mouseX, mouseX, mouseY);
+    text("Y is: " + mouseY, mouseX, mouseY +10);
+    noStroke();
+  }
 }
