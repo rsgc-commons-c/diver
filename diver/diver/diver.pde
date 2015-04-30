@@ -25,7 +25,7 @@ void setup() {
   //generate the obstacles (sharks) + makes them move
   while ( u < 40) {
     x[u] = random(width);
-    y[u] = random(height);
+    y[u] = random(height -15);
     xflip[u] = 1;
     yflip[u] = 1;
     if (u%2 == 0) {
@@ -47,15 +47,27 @@ void draw() {
   if (keyPressed) {
     if (keyCode == UP) {
       yPlayer = yPlayer - 5;
+      if(yPlayer < 0){
+        yPlayer = 0;
+      }
     }
     if (keyCode == DOWN) {
       yPlayer = yPlayer + 5;
+      if(yPlayer > height){
+      yPlayer = height;
     } 
+    }
     if (keyCode == LEFT) {
       xPlayer = xPlayer - 5;
+      if(xPlayer < 0){
+        xPlayer = width;
+    }
     }
     if (keyCode == RIGHT) {
       xPlayer = xPlayer + 5;
+      if(xPlayer > width){
+        xPlayer = 0;
+    }
     }
   }
 
@@ -64,34 +76,32 @@ void draw() {
     rect(x[u], y[u], 10, 10);
     x[u] = x[u]+1 * xflip[u];
 
-    if (x[u] > width) {
+    if (x[u] > width + 3) {
       xflip[u] = -1;
       y[u] = y[u] + random(-100, 100);
     }
-    
+
     if (x[u]<0) {
       xflip[u]= 1;
       y[u] = y[u] + random(-100, 100);
     }
-    //makes sure the obstacles don't go out of bounds
+    //makes sure the obstacles don't go out of bounds & randomly generate
     if (y[u] > 700||y[u] < 0) {
-      y[u] = random(0, height);
+      y[u] = random(0, height - 15);
       x[u] = random(0, width);
-      ellipse (x[u], y[u], 50, 50);//just shows where random square is
     } 
     //dangerous targets - work in progress
-    float a = mouseX - x[u]; // horizontal leg of the triangle
-    float b =  mouseY - y[u]; // vertical leg of the triangle
-    float c = sqrt( a*a + b*b ); // Use Pythagorean theorem to get hypotenuse length (sq. root of a^2 + b^2)
-    if ( c <= diameter/2 && mousePressed) {
-      ellipse(10, 10, 10, 10);
+
+    if (xPlayer > x[u] && xPlayer < x[u] +10 && yPlayer > y[u] && yPlayer < y[u]+10) {
+      xPlayer = 0;
+      yPlayer = 0;
     }
 
     //coordinates
     textSize(10);
     fill(0, 0, 0);
-    text("X is: " + mouseX, mouseX, mouseY);
-    text("Y is: " + mouseY, mouseX, mouseY +10);
+    text("X is: " + xPlayer, xPlayer, yPlayer);
+    text("Y is: " + yPlayer, xPlayer, yPlayer +10);
     noStroke();
   }
 } 
