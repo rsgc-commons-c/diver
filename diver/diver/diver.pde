@@ -2,15 +2,16 @@
 //objective of the game is to try and
 //get the treasure without hitting the
 //shark
-
+int total = 100;
 int u=0;//u can be equal to anything for us
 int diameter = 0;//for the circle
-float[] x = new float[40];//now we have 10 programmable values for x
-float[] y = new float[40];//now we have 10 programmable values for y
-int[] xflip = new int[40];// now we have the possibility to flip the sharks to go back across the screen
-int[] yflip = new int[40];//this lets the sharks come back on a different path
+float[] x = new float[total];//now we have 10 programmable values for x
+float[] y = new float[total];//now we have 10 programmable values for y
+int[] xflip = new int[total];// now we have the possibility to flip the sharks to go back across the screen
+int[] yflip = new int[total];//this lets the sharks come back on a different path
 float xPlayer = 0;
 float yPlayer = 0;
+PImage image;
 /*this is a 
  u = 0
  x[1] = 0
@@ -19,11 +20,13 @@ float yPlayer = 0;
  */
 
 void setup() {
+  
   //createcanvas
-  size(400, 700);
+  size(600, 700);
+  image = loadImage ("free_underwater_background_psd_by_sorbamedia-d7p6xw7.jpg");
   colorMode(HSB, 360, 100, 100);
   //generate the obstacles (sharks) + makes them move
-  while ( u < 40) {
+  while ( u < x.length) {
     x[u] = random(width);
     y[u] = random(height -15);
     xflip[u] = 1;
@@ -38,33 +41,34 @@ void setup() {
 void draw() {
 
   //background colour
-  background(184, 70, 100);
+  background(image);
+  
 
   //player
-  ellipse(xPlayer, yPlayer, 10, 10);
+  drawDiver(xPlayer, yPlayer);
 
   //arrow key commands
   if (keyPressed) {
     if (keyCode == UP) {
-      yPlayer = yPlayer - 5;
+      yPlayer = yPlayer - 1;
       if(yPlayer < 0){
         yPlayer = 0;
       }
     }
     if (keyCode == DOWN) {
-      yPlayer = yPlayer + 5;
+      yPlayer = yPlayer + 1;
       if(yPlayer > height){
       yPlayer = height;
     } 
     }
     if (keyCode == LEFT) {
-      xPlayer = xPlayer - 5;
+      xPlayer = xPlayer - 1;
       if(xPlayer < 0){
         xPlayer = width;
     }
     }
     if (keyCode == RIGHT) {
-      xPlayer = xPlayer + 5;
+      xPlayer = xPlayer + 1;
       if(xPlayer > width){
         xPlayer = 0;
     }
@@ -105,3 +109,10 @@ void draw() {
     noStroke();
   }
 } 
+
+void drawDiver(float latitude, float longitute){
+  pushMatrix();
+  translate(latitude, longitute);
+  ellipse(0, 0, 10, 10);
+  popMatrix();
+}
