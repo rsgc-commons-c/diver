@@ -12,6 +12,10 @@ int[] yflip = new int[total];//this lets the sharks come back on a different pat
 float xPlayer = 0;
 float yPlayer = 0;
 PImage image;
+PImage diver;
+float[] bubbleX = new float[5];
+float[] bubbleY = new float[5];
+
 /*this is a 
  u = 0
  x[1] = 0
@@ -24,6 +28,7 @@ void setup() {
   //createcanvas
   size(600, 700);
   image = loadImage ("free_underwater_background_psd_by_sorbamedia-d7p6xw7.jpg");
+  diver = loadImage ("diver.png");
   colorMode(HSB, 360, 100, 100);
   //generate the obstacles (sharks) + makes them move
   while ( u < x.length) {
@@ -43,9 +48,18 @@ void draw() {
   //background colour
   background(image);
   
-
+  for(int w = 0; w<bubbleX.length; w = w+1){ 
+  ellipse(bubbleX[w], bubbleY[w], 3, 3);
+  bubbleY[w] = bubbleY[w] - random(0.5,1);
+  bubbleX[w] = random(-1,1)+bubbleX[w];
+  if (bubbleY[w] < 0){
+    bubbleY[w] = xPlayer + 30;
+    bubbleX[w] = yPlayer - -25;
+  }
+  }
   //player
   drawDiver(xPlayer, yPlayer);
+ 
 
   //arrow key commands
   if (keyPressed) {
@@ -113,6 +127,8 @@ void draw() {
 void drawDiver(float latitude, float longitute){
   pushMatrix();
   translate(latitude, longitute);
-  ellipse(0, 0, 10, 10);
+  scale(0.2, 0.2);
+  image(diver, 0, 0);
   popMatrix();
+  
 }
