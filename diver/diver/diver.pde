@@ -97,7 +97,8 @@ fill(0, 0, 0);
 
   //makes for the bouncing off the walls
   for (int u = 0; u < x.length; u = u+1) {
-    createShark(x[u] = x[u]+1 * xflip[u]);
+    createShark(x[u], y[u]);// draw an instance of this shark at this x, y position
+    //= x[u]+1 * xflip[u]);
 
     if (x[u] > width + 3) {
       xflip[u] = -1;
@@ -150,19 +151,22 @@ void drawDiver(float latitude, float longitute) {
   popMatrix();
 }
 
-void createShark(float x[], float y[]) {
+void createShark(float x, float y) {
+
+  // note to self: make x, y values relative to 0, 0
   
- ellipse(309, 38, 34, 14);
-  rect(10, 10, 20, 20);
+  pushMatrix();
+  translate(x, y);
+  ellipse(30, 16, 32, 14);
   fill(360, 100, 100);
-  ellipse(317, 36, 4, 4);
-  ellipse(1, 1, 2, 2);
+  ellipse(39, 15, 4, 4);
   fill(0, 0, 0);
-  triangle(305, 51, 312, 43 ,299 ,41);
-  triangle(294, 37, 285, 46, 282, 26);
-  triangle(300, 34, 294, 16, 315, 34);
+  triangle(22, 33, 36, 23 ,22 ,24);
+  triangle(16, 17, 6, 26, 7, 7);
+  triangle(24, 1, 37, 12, 19, 16);
   fill(360, 100, 284);
-  rect(310, 33, 1, 10);
-  rect(306, 32, 1, 10);
-  rect(302, 32, 1, 10);
+  rect(28, 11, 1, 10);
+  rect(30, 11, 1, 10);
+  rect(26, 11, 1, 10);
+  popMatrix();
 }
